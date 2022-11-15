@@ -1,0 +1,47 @@
+﻿@addTagHelper *,Microsoft.AspNetCore.Mvc.TagHelpers
+@using ExamSystem.Models;
+
+
+@foreach (Question question in @ViewBag.exam.Questions)
+{
+    <div class="scp-quizzes-data" id="question'@question.QuestionId'"hidden  >
+        <h3>Question : @question.Question1</h3>
+        <input type="text" name="qID" id="qID" value="2" hidden>
+
+        <br />
+        <input type="radio" id="answerA'@question.QuestionId'" value="1" name="answer'@question.QuestionId'">
+        <label for="answerA'@question.QuestionId'">A. @question.Answer1</label><br />
+
+        <input type="radio" id="answerB'@question.QuestionId'" value="2" name="answer'@question.QuestionId'">
+        <label for="answerB'@question.QuestionId'">B. @question.Answer2</label><br />
+
+        <input type="radio" id="answerC'@question.QuestionId'" value="3" name="answer'@question.QuestionId'">
+        <label for="answerC'@question.QuestionId'">C. @question.Answer3</label><br />
+
+        <input type="radio" id="answerD'@question.QuestionId'" value="4" name="answer'@question.QuestionId'">
+        <label for="answerD'@question.QuestionId'">D. @question.Answer4</label><br />
+    </div>
+   
+}
+<button type="button" onclick="display()" class="btn btn-danger">Next</button>
+<script>
+    function display(){
+        var x = document.getElementById("qID").value;
+        
+        for (var i = x; i < 4; i++) {
+            if (document.getElementById("question'" + i + "'").hidden == true) {
+                document.getElementById("question'" + i + "'").hidden = false;
+                if (document.getElementById("question'" + (i - 1) + "'")!= null)
+                document.getElementById("question'" + (i-1) + "'").hidden = true;
+                document.getElementById("qID").value = i;
+                return;
+            }           
+        }
+        
+    }
+    
+    window.onload = function () {
+        var x = document.getElementById("qID").value;
+        document.getElementById("question'" + x + "'").hidden = false;
+    };
+</script>

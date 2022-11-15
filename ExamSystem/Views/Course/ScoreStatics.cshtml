@@ -1,0 +1,182 @@
+﻿
+@addTagHelper *,Microsoft.AspNetCore.Mvc.TagHelpers
+@using ExamSystem.Models;
+
+<style>
+    .styled-table {
+        border-collapse: collapse;
+        margin: 25px 0;
+        font-size: 0.9em;
+        font-family: sans-serif;
+        min-width: 400px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    }
+
+        .styled-table thead tr {
+            text-align: left;
+        }
+
+        .styled-table th,
+        .styled-table td {
+            padding: 12px 15px;
+        }
+
+        .styled-table tbody tr {
+            border-bottom: 1px solid #dddddd;
+        }
+
+            .styled-table tbody tr:nth-of-type(even) {
+                background-color: #f3f3f3;
+            }
+
+            .styled-table tbody tr:last-of-type {
+                border-bottom: 2px solid #009879;
+            }
+
+            .styled-table tbody tr.active-row {
+                font-weight: bold;
+                color: #009879;
+            }
+
+    .main {
+        display: flex;
+    }
+
+    .active {
+        font-weight: 1000;
+        font-size: 20px;
+    }
+</style>
+
+<div class="form-group" style="display:flex;column-gap:1rem;">
+    <div style="flex-basis:20%;border-radius:5px;border: 1px solid">
+        <h4>List of Categories</h4>
+        <select onchange="filterExamResult(0)" id="category" name="category">
+            <option value="0">
+                All
+            </option>
+            @foreach (Category item in @ViewBag.categories)
+            {
+                if (item.CategoryId == @ViewBag.CategoryID){
+                    <option selected value="@item.CategoryId">
+                        @item.CategoryName
+                    </option>
+                }
+                if (item.CategoryId != @ViewBag.CategoryID)
+                {
+                    <option value="@item.CategoryId">
+                        @item.CategoryName
+                    </option>
+                }
+                
+            }
+        </select>
+    </div>
+    <div style="flex-basis:30%;border-radius:5px;border: 1px solid">
+        <h4>Sort By Mark</h4>
+        <select onchange="filterExamResult(0)" id="byMark" name="byMark">
+            <option value="None">
+                None
+            </option>
+            @if (@ViewBag.byMark == "High"){
+                <option selected value="High">
+                    High To Low
+                </option>
+            }
+            @if (@ViewBag.byMark != "High")
+            {
+                <option  value="High">
+                    High To Low
+                </option>
+            }
+            @if (@ViewBag.byMark == "Low")
+            {
+                <option selected value="Low">
+                    Low To High
+                </option>
+            }
+            @if (@ViewBag.byMark != "Low")
+            {
+                <option value="Low">
+                    Low To High
+                </option>
+            }
+           
+            
+        </select>
+
+    </div>
+    
+    
+</div>
+<div class="main" class="form-group" style="display:flex;column-gap:1rem;">
+    <div style="flex-basis:20%;border-radius:5px;border: 1px solid">
+        <h4>Your Exams</h4>
+        <br />
+        @foreach (Exam item in @ViewBag.listExam)
+        {
+
+            <input onchange="filterExamResult(@item.ExamId)" type="checkbox" id="checkExam'@item.ExamId'" value="@item.ExamId">
+            <label for="checkExam'@item.ExamId'">@item.ExamName</label>
+            <br>
+        }
+    </div>
+    <div style="flex-basis:80%;border-radius:5px;border: 1px solid">
+        
+            <table class="styled-table" border="1">
+                <thead>
+                    <tr>
+                        <th>Exam Name</th>
+                    <th>Student ID</th>
+                        <th>Exam Taker Name</th>
+                        <th>Mark</th>
+                        <th>Submit Time</th>                        
+                    </tr>
+                </thead>
+                <tbody>
+                @foreach (CompletedExam item in @ViewBag.completedExamsList)
+                    {
+                        <tr>
+                        <td>@item.Exam.ExamName</td>
+                        <td>@item.User.UserId</td>
+                            <td>@item.User.Name</td>
+                            <td>@item.Mark</td>
+                            <td>@item.CreatedDate</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        
+        
+    </div>
+</div>
+<script>
+    function filterExamResult(param){
+        var category = document.getElementById("category").value
+        var byMark = document.getElementById("byMark").value
+        var exam = param;
+        var choosenExam = "";
+        let examIdList = '@ViewBag.examIdList';
+        const myArray = examIdList.split(" ");
+        for (i = 1; i <= @ViewBag.size;i++){
+            let x = myArray[i];
+            if (document.getElementById("checkExam'" + x + "'") != null)
+                if (document.getElementById("checkExam'" + x + "'").checked == true)
+                choosenExam = choosenExam + " " +x;
+        }
+        window.location.href = "/Course/ScoreStatics?categoryID=" + category + "&choosenExam=" + choosenExam + "&byMark=" + byMark;
+
+    }
+    window.onload = function () {
+        let examIdList = '@ViewBag.choosenExamIdList';
+        const myArray = examIdList.split(" ");
+        for (i = 1; i <= @ViewBag.size; i++) {
+            let x = myArray[i];
+            if (document.getElementById("checkExam'" + x + "'") != null){
+                document.getElementById("checkExam'" + x + "'").checked = true;
+            }
+                
+        }
+
+        };
+</script>

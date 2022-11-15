@@ -1,0 +1,299 @@
+﻿@{
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@addTagHelper *,Microsoft.AspNetCore.Mvc.TagHelpers
+@using ExamSystem.Models;
+<div class="jumbotron jumbotron-fluid position-relative overlay-bottom" style="margin-bottom: 90px;">
+    <div class="container text-center my-5 py-5">
+        <h1 class="text-white mt-4 mb-4">Learn From Home</h1>
+        <h1 class="text-white display-1 mb-5">Education Courses</h1>
+        <div class="mx-auto mb-5" style="width: 100%; max-width: 600px;">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <button class="btn btn-outline-light bg-white text-body px-4 dropdown-toggle" type="button" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">
+                        Courses
+                    </button>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="#">Courses 1</a>
+                        <a class="dropdown-item" href="#">Courses 2</a>
+                        <a class="dropdown-item" href="#">Courses 3</a>
+                    </div>
+                </div>
+                <input type="text" class="form-control border-light" style="padding: 30px 25px;" placeholder="Keyword">
+                <div class="input-group-append">
+                    <button class="btn btn-secondary px-4 px-lg-5">Search</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Header End -->
+
+<div class="container-fluid py-5">
+    <div class="container py-5">
+        <div class="row mx-0 justify-content-center">
+            <div class="col-lg-8">
+                <div class="section-title text-center position-relative mb-5">
+                    <h6 class="d-inline-block position-relative text-secondary text-uppercase pb-2">Our Courses</h6>
+                    <h1 class="display-4">Checkout New Releases Of Our Courses</h1>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            @foreach (Exam exam in @ViewBag.listExam)
+            {
+                @if (@ViewBag.User != null)
+                {
+                    <div class="col-lg-4 col-md-6 pb-4">
+                        <a class="courses-list-item position-relative d-block overflow-hidden mb-2" href="/Course/CourseDetail?eID=@exam.ExamId">
+                            <img class="img-fluid" src="@exam.Pictures" alt="">
+                            <div class="courses-text">
+                                <h4 class="text-center text-white px-3">
+                                    @exam.ExamName
+                                </h4>
+                                <div class="border-top w-100 mt-3">
+                                    <div class="d-flex justify-content-between p-4">
+                                        <span class="text-white"><i class="fa fa-user mr-2"></i>@exam.OwnerNavigation.User.Name</span>
+                                        <span class="text-white">
+                                            <i class="fa fa-star mr-2"></i>@exam.Category.CategoryName
+                                            <small>(@exam.Time minutes)</small>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                }
+                @if (@ViewBag.User == null)
+                {
+                    <div class="col-lg-4 col-md-6 pb-4">
+                        <a class="courses-list-item position-relative d-block overflow-hidden mb-2" data-toggle="modal" data-target="#exampleModalCenter">
+                            <img class="img-fluid" src="@exam.Pictures" alt="">
+                            <div class="courses-text">
+                                <h4 class="text-center text-white px-3">
+                                    @exam.ExamName
+                                </h4>
+                                <div class="border-top w-100 mt-3">
+                                    <div class="d-flex justify-content-between p-4">
+                                        <span class="text-white"><i class="fa fa-user mr-2"></i>@exam.OwnerNavigation.User.Name</span>
+                                        <span class="text-white">
+                                            <i class="fa fa-star mr-2"></i>@exam.Category.CategoryName
+                                            <small>(@exam.Time minutes)</small>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                }
+
+
+            }
+
+            <div class="col-lg-4 col-md-6 pb-4">
+                <a class="courses-list-item position-relative d-block overflow-hidden mb-2" href="detail.html">
+                    <img class="img-fluid" src="img/courses-2.jpg" alt="">
+                    <div class="courses-text">
+                        <h4 class="text-center text-white px-3">
+                            Web design & development courses for
+                            beginners
+                        </h4>
+                        <div class="border-top w-100 mt-3">
+                            <div class="d-flex justify-content-between p-4">
+                                <span class="text-white"><i class="fa fa-user mr-2"></i>Jhon Doe</span>
+                                <span class="text-white">
+                                    <i class="fa fa-star mr-2"></i>4.5
+                                    <small>(250)</small>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-4 col-md-6 pb-4">
+                <a class="courses-list-item position-relative d-block overflow-hidden mb-2" href="detail.html">
+                    <img class="img-fluid" src="img/courses-3.jpg" alt="">
+                    <div class="courses-text">
+                        <h4 class="text-center text-white px-3">
+                            Web design & development courses for
+                            beginners
+                        </h4>
+                        <div class="border-top w-100 mt-3">
+                            <div class="d-flex justify-content-between p-4">
+                                <span class="text-white"><i class="fa fa-user mr-2"></i>Jhon Doe</span>
+                                <span class="text-white">
+                                    <i class="fa fa-star mr-2"></i>4.5
+                                    <small>(250)</small>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-4 col-md-6 pb-4">
+                <a class="courses-list-item position-relative d-block overflow-hidden mb-2" href="detail.html">
+                    <img class="img-fluid" src="img/courses-4.jpg" alt="">
+                    <div class="courses-text">
+                        <h4 class="text-center text-white px-3">
+                            Web design & development courses for
+                            beginners
+                        </h4>
+                        <div class="border-top w-100 mt-3">
+                            <div class="d-flex justify-content-between p-4">
+                                <span class="text-white"><i class="fa fa-user mr-2"></i>Jhon Doe</span>
+                                <span class="text-white">
+                                    <i class="fa fa-star mr-2"></i>4.5
+                                    <small>(250)</small>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-4 col-md-6 pb-4">
+                <a class="courses-list-item position-relative d-block overflow-hidden mb-2" href="detail.html">
+                    <img class="img-fluid" src="img/courses-5.jpg" alt="">
+                    <div class="courses-text">
+                        <h4 class="text-center text-white px-3">
+                            Web design & development courses for
+                            beginners
+                        </h4>
+                        <div class="border-top w-100 mt-3">
+                            <div class="d-flex justify-content-between p-4">
+                                <span class="text-white"><i class="fa fa-user mr-2"></i>Jhon Doe</span>
+                                <span class="text-white">
+                                    <i class="fa fa-star mr-2"></i>4.5
+                                    <small>(250)</small>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-4 col-md-6 pb-4">
+                <a class="courses-list-item position-relative d-block overflow-hidden mb-2" href="detail.html">
+                    <img class="img-fluid" src="img/courses-6.jpg" alt="">
+                    <div class="courses-text">
+                        <h4 class="text-center text-white px-3">
+                            Web design & development courses for
+                            beginners
+                        </h4>
+                        <div class="border-top w-100 mt-3">
+                            <div class="d-flex justify-content-between p-4">
+                                <span class="text-white"><i class="fa fa-user mr-2"></i>Jhon Doe</span>
+                                <span class="text-white">
+                                    <i class="fa fa-star mr-2"></i>4.5
+                                    <small>(250)</small>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-12">
+                <nav aria-label="Page navigation">
+                    <ul class="pagination pagination-lg justify-content-center mb-0">
+                        <li class="page-item disabled">
+                            <a class="page-link rounded-0" href="#" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                        </li>
+                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item">
+                            <a class="page-link rounded-0" href="#" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="login-wrap">
+                    <div class="login-html">
+                        <input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">Sign In</label>
+                        <input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab">Sign Up</label>
+                        <div class="login-form">
+                            <form id="formSignIn" asp-controller="Login" asp-action="Index">
+                                <div class="sign-in-htm">
+                                    <div class="group">
+                                        <label for="user" class="label">Username</label>
+                                        <input id="userName" name="userName" type="text" class="input" required>
+                                    </div>
+                                    <div class="group">
+                                        <label for="pass" class="label">Password</label>
+                                        <input id="pass" name="pass" type="password" class="input" data-type="password" required>
+                                    </div>
+                                    <div class="group">
+                                        <input id="check" type="checkbox" class="check" checked>
+                                        <label for="check"><span class="icon"></span> Keep me Signed in</label>
+                                    </div>
+                                    <div class="group">
+                                        <input type="submit" asp-action="Index" asp-controller="Login" class="button" value="Sign In">
+                                    </div>
+                                    <div class="hr"></div>
+                                    <div class="foot-lnk">
+                                        <a href="#forgot">Forgot Password?</a>
+                                    </div>
+                                </div>
+                            </form>
+
+                            <div class="sign-up-htm">
+                                <form id="formSignUp" asp-controller="Login" asp-action="SignUp" method="post">
+
+                                    <div class="group">
+                                        <label for="user" class="label">Username</label>
+                                        <input id="signUpName" onkeyup="signUp()" name="signUpName" type="text" class="input" required>
+                                    </div>
+                                    <div class="group">
+                                        <label for="pass" class="label">Password</label>
+                                        <input id="signUpPass" name="signUpPass" type="password" class="input" data-type="password" required>
+                                    </div>
+                                    <div class="group">
+                                        <label for="pass" class="label">Repeat Password</label>
+                                        <input id="signUpRePass" name="signUpRePass" type="password" class="input" data-type="password" required>
+                                    </div>
+                                    <div class="group">
+                                        <label for="mail" class="label">Email</label>
+                                        <input id="signUpMail" name="signUpMail" type="text" class="input" required>
+                                    </div>
+                                    <div class="group">
+                                        <input type="submit" onclick="signUp()" class="button" value="Sign Up">
+                                    </div>
+                                    <div class="hr"></div>
+                                    <div class="foot-lnk">
+                                        <label for="tab-1">Already Member?</a>
+                                    </div>
+
+                                </form>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+
+    </div>
+
+</div>
+<!-- Courses End -->

@@ -1,0 +1,215 @@
+﻿@{
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@addTagHelper *,Microsoft.AspNetCore.Mvc.TagHelpers
+@using ExamSystem.Models;
+<!DOCTYPE html>
+<html>
+<head>
+    <title>C Programming Language Output this code Quizzes 1</title>
+
+    <link rel="stylesheet" type="text/css" href="~/css/StartCourse.css" />
+
+
+    <script src="http://www.fastlearning.in/controller/js/jquery-1.9.1.min.js"></script>
+
+    <script type="text/javascript">
+        
+    </script>
+
+    <script type="text/javascript">
+       
+
+    </script>
+
+</head>
+<body>
+    <h1>Exam Name: @ViewBag.completedExam.Exam.ExamName</h1>
+    <input type="text" id="submitType" hidden></>
+    <h3>Your Score: @ViewBag.count/@ViewBag.completedExam.Exam.Numofquestion (@ViewBag.completedExam.Mark Marks)</h3>
+
+
+    <div class="scp-quizzes-main">
+
+
+        @foreach (Question question in @ViewBag.Questions)
+        {
+            @foreach (ExamAnswer examAnswer in @ViewBag.completedExam.ExamAnswers)
+            {
+                @if (question.QuestionId == examAnswer.QuestionId)
+                {
+
+                    <div class="scp-quizzes-data">
+                        <h3>Question: @question.Question1</h3>
+                        <br />
+                        @if (examAnswer.CorrectAnswer == 1)
+                        {
+                            <input type="radio" id="answerA'@question.QuestionId'" checked value="1" name="answer'@question.QuestionId'">
+                        <label for="answerA'@question.QuestionId'">1. @question.Answer1</label><br />
+
+                        <input type="radio"  value="2" name="answer'@question.QuestionId'">
+                        <label for="answerB'@question.QuestionId'">2. @question.Answer2</label><br />
+
+                        <input type="radio"  value="3" name="answer'@question.QuestionId'">
+                        <label for="answerC'@question.QuestionId'">3. @question.Answer3</label><br />
+
+                        <input type="radio" value="4" name="answer'@question.QuestionId'">
+                        <label for="answerD'@question.QuestionId'">4. @question.Answer4</label><br />
+                            @if (@examAnswer.Answer != -1)
+                            {   @if(@examAnswer.Answer == 1){
+                                    <h4>Your Answer: @examAnswer.Answer .@examAnswer.AnswerContent (TRUE) </h4>
+                            }
+                                @if (@examAnswer.Answer != 1)
+                                {
+                                    <h4>Your Answer: @examAnswer.Answer .@examAnswer.AnswerContent (FALSE) </h4>
+                                }
+                                
+                        }
+                            @if (@examAnswer.Answer == -1)
+                            {
+                                <h4>Your Answer: none </h4>
+                            }
+                            
+                        }
+                        @if (examAnswer.CorrectAnswer == 2)
+                        {
+                            <input type="radio"  value="1" name="answer'@question.QuestionId'">
+                            <label for="answerA'@question.QuestionId'">1. @question.Answer1</label>
+
+                            <br />
+
+                            <input type="radio" checked id="answerB'@question.QuestionId'" value="2" name="answer'@question.QuestionId'">
+                            <label for="answerB'@question.QuestionId'">2. @question.Answer2</label>
+
+                            <br />
+
+                            <input type="radio"  value="3" name="answer'@question.QuestionId'">
+                            <label for="answerC'@question.QuestionId'">3. @question.Answer3</label>
+
+                            <br />
+
+                            <input type="radio" value="4" name="answer'@question.QuestionId'">
+                            <label for="answerD'@question.QuestionId'">4. @question.Answer4</label>
+
+                            <br />
+                            @if (@examAnswer.Answer != -1)
+                            {   @if (@examAnswer.Answer == 2)
+                                {
+                                    <h4>Your Answer: @examAnswer.Answer (TRUE) </h4>
+                                }
+                                @if (@examAnswer.Answer != 2)
+                                {
+                                    <h4>Your Answer: @examAnswer.Answer (FALSE) </h4>
+                                }
+
+                            }
+                            @if (@examAnswer.Answer == -1)
+                            {
+                                <h4>Your Answer: none </h4>
+                            }
+                        }
+                        @if (examAnswer.CorrectAnswer == 3)
+                        {
+                            <input type="radio"  value="1" name="answer'@question.QuestionId'">
+                            <label for="answerA'@question.QuestionId'">1. @question.Answer1</label>
+
+                            <br />
+
+                            <input type="radio"  value="2" name="answer'@question.QuestionId'">
+                            <label for="answerB'@question.QuestionId'">2. @question.Answer2</label>
+
+                            <br />
+
+                            <input type="radio" id="answerC'@question.QuestionId'" checked value="3" name="answer'@question.QuestionId'">
+                            <label for="answerC'@question.QuestionId'">3. @question.Answer3</label>
+
+                            <br />
+
+                            <input type="radio" value="4" name="answer'@question.QuestionId'">
+                            <label for="answerD'@question.QuestionId'">4. @question.Answer4</label>
+
+                            <br />
+                            @if (@examAnswer.Answer != -1)
+                            {   @if(@examAnswer.Answer == 3){
+                                    <h4>Your Answer: @examAnswer.Answer (TRUE) </h4>
+                            }
+                                @if (@examAnswer.Answer != 3)
+                                {
+                                    <h4>Your Answer: @examAnswer.Answer (FALSE) </h4>
+                                }
+                                
+                        }
+                            @if (@examAnswer.Answer == -1)
+                            {
+                                <h4>Your Answer: none </h4>
+                            }
+                        }
+                        @if (examAnswer.CorrectAnswer == 4)
+                        {
+                            <input type="radio" value="1" name="answer'@question.QuestionId'">
+                            <label for="answerA'@question.QuestionId'">1. @question.Answer1</label>
+
+                            <br />
+
+                            <input type="radio"  value="2" name="answer'@question.QuestionId'">
+                            <label for="answerB'@question.QuestionId'">2. @question.Answer2</label>
+
+                            <br />
+
+                            <input type="radio" value="3" name="answer'@question.QuestionId'">
+                            <label for="answerC'@question.QuestionId'">3. @question.Answer3</label>
+
+                            <br />
+
+                            <input type="radio" checked id="answerD'@question.QuestionId'" value="4" name="answer'@question.QuestionId'">
+                            <label for="answerD'@question.QuestionId'">4. @question.Answer4</label>
+
+                            <br />
+
+                            @if (@examAnswer.Answer != -1)
+                            {   @if (@examAnswer.Answer == 4)
+                                {
+                                    <h4>Your Answer: @examAnswer.Answer (TRUE) </h4>
+                                }
+                                @if (@examAnswer.Answer != 4)
+                                {
+                                    <h4>Your Answer: @examAnswer.Answer (FALSE) </h4>
+                                }
+
+                            }
+                            @if (@examAnswer.Answer == -1)
+                            {
+                                <h4>Your Answer: none </h4>
+                            }
+                        }
+
+
+                        
+                    </div>
+                }
+            }
+            
+        }
+
+
+
+
+
+    </div>
+    
+
+</body>
+
+<script type="text/javascript">
+
+
+   
+
+
+
+
+
+
+</script>
+</html>

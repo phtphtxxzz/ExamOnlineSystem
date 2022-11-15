@@ -1,0 +1,171 @@
+﻿@{
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@addTagHelper *,Microsoft.AspNetCore.Mvc.TagHelpers
+@using ExamSystem.Models;
+<!DOCTYPE html>
+<html>
+<head>
+    <title>C Programming Language Output this code Quizzes 1</title>
+
+    <link rel="stylesheet" type="text/css" href="~/css/StartCourse.css" />
+
+
+    <script src="http://www.fastlearning.in/controller/js/jquery-1.9.1.min.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('label').click(function () {
+                $('label').removeClass('worngans');
+                $(this).addClass('worngans');
+            });
+        });
+    </script>
+    
+    <script type="text/javascript">
+        window.onload = function () {
+            var examTime = 60 * @ViewBag.exam.Time,
+                display = document.querySelector('#time');
+            startTimer(examTime, display);
+        };
+        function startTimer(duration, display) {
+            var timer = duration;
+            var minutes, seconds;
+            var warning = 60;
+            var ok = false;
+            var form = document.forms.exam;
+
+            var t = setInterval(function () {
+                minutes = parseInt(timer / 60, 10);
+                seconds = parseInt(timer % 60, 10);
+                minutes = minutes < 10 ? "0" + minutes : minutes;
+                seconds = seconds < 10 ? "0" + seconds : seconds;
+
+                display.textContent = minutes + ":" + seconds;
+
+                //if (timer <= warning && !ok) {
+                //    alert('Time is running out.... less than 1 minute to go!');
+                //    ok = true;
+                //}
+
+                if (--timer <= 0) {
+                    timer = duration;
+
+                    if (!isNaN(t)) clearInterval(t);
+
+                    // submit the form...
+                    document.getElementById("submitType").value = "submit";
+                    document.getElementById("submitButton").click();
+                }
+            }, 1000);
+        }
+
+    </script>
+
+</head>
+<body>
+    <h1>Exam: @ViewBag.exam.ExamName</h1>
+    <h2><div id="timediv">Exam ends in <span id="time">@ViewBag.exam.Time</span> minutes!</div></h2>
+    <input type="text" id="submitType" hidden></>
+    
+    
+    
+    <div class="scp-quizzes-main">
+
+        @foreach (Question question in @ViewBag.exam.Questions)
+        {
+            <div class="scp-quizzes-data">
+                <h3>Question : @question.Question1</h3>
+                <input type="text" name="qID" id="qID" value="@question.QuestionId" hidden>
+                
+                <br />
+                <input type="radio" id="answerA'@question.QuestionId'" value="1" name="answer'@question.QuestionId'">
+                <label for="answerA'@question.QuestionId'">1. @question.Answer1</label><br />
+
+                <input type="radio" id="answerB'@question.QuestionId'" value="2" name="answer'@question.QuestionId'">
+                <label for="answerB'@question.QuestionId'">2. @question.Answer2</label><br />
+
+                <input type="radio" id="answerC'@question.QuestionId'" value="3" name="answer'@question.QuestionId'">
+                <label for="answerC'@question.QuestionId'">3. @question.Answer3</label><br />
+
+                <input type="radio" id="answerD'@question.QuestionId'" value="4" name="answer'@question.QuestionId'">
+                <label for="answerD'@question.QuestionId'">4. @question.Answer4</label><br />
+            </div>
+        }
+        
+
+
+
+        
+    </div>
+    <button type="button" onclick="addValue()" id="submitButton" class="btn btn-danger">Submit</button>
+
+</body>
+
+<script type="text/javascript">
+    
+    
+    function SendResult(param) {
+
+        $.ajax(
+            {
+                type: 'POST',
+                dataType: 'JSON',
+                url: '/Course/SubmitCourse',
+                data: { AnswerList: param, eID: @ViewBag.exam.ExamId },
+                success:
+                    function (response) {
+                        if (response == 1) {
+                            alert("Submit Exam Success");
+                            window.location.href = "/Course/CourseResult";
+                        }
+                        else alert("Submit Exam Fail");
+
+                    },
+                error:
+                    function (response) {
+                        alert("Error: " + response);
+                    }
+            });
+    }
+    function addValue(){
+        
+        var AnswerList = "";
+        var checked = 0;
+        var exist = "false";
+        var x = document.getElementById("qID").value;        
+        for (var i = 0; i < @ViewBag.size; i++) {
+            var answer = document.getElementsByName("answer'" + x + "'");
+            for (j = 0; j < answer.length; j++) {
+                if (answer[j].checked) {
+                    AnswerList = AnswerList + " " + answer[j].value;
+                    checked = Number(checked) + Number(1);
+                    exist = "true";
+                    break;
+                }                
+            }
+            if (exist!=="true")
+                AnswerList = AnswerList + " -1";
+            else exist = "false";
+            x = Number(x) + Number(1);
+            
+            
+        }
+        
+        if (checked < @ViewBag.size && document.getElementById("submitType").value !== "submit") {
+            alert("Please answer all question");
+            return;
+        }
+        else SendResult(AnswerList);
+       
+    };
+    
+    
+    
+
+
+
+
+</script>
+</html>
